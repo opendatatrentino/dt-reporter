@@ -51,7 +51,7 @@ public class MainClass {
 			e1.printStackTrace();
 		}
 		try {
-			fw.write("\"#(c) 2013 TrentoRISE -- Created by dt-reporter \n");
+			fw.write("\"#(c) 2013 TrentoRISE -- Created by dt-reporter\"\n");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
