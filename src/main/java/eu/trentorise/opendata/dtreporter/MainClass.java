@@ -26,6 +26,7 @@ import org.ckan.Connection;
 import org.ckan.resource.impl.Dataset;
 import org.ckan.resource.impl.Extra;
 import org.ckan.resource.impl.Group;
+import org.ckan.resource.impl.Resource;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
@@ -59,13 +60,17 @@ public class MainClass {
 		CSVWriter csv = null;
 		csv = new CSVWriter(fw,';');
 		
-		csv.writeNext(new String[] {"Name","Title","Maintainer","Author","data di creazione","data di aggiornamento","groupName"});
+		csv.writeNext(new String[] {"Name","Title","Maintainer","Author","data di creazione","data di aggiornamento","groupName","resourceName","resourceFormat","resourceURL"});
 		
 		for (String dsname : datasets) {
 			try {
 				Dataset toadd = ccl.getDataset(dsname);
-				String[] toput = new String[7];
+				String[] toput = new String[10];
 				List<Group> lga = toadd.getGroups();
+				if(lga.size() > 1)
+				{
+					System.out.println(toadd.getName());
+				}
 				for (Group group : lga) {
 					toput[0] = toadd.getName();
 					toput[1] = toadd.getTitle();
@@ -88,7 +93,12 @@ public class MainClass {
 						}
 					}
 					toput[6] = group.getName();
-					csv.writeNext(toput);
+					for (Resource res : toadd.getResources()) {
+						toput[7] = res.getName();
+						toput[8] = res.getFormat();
+						toput[9] = res.getUrl();
+						csv.writeNext(toput);
+					}
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
