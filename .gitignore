@@ -1,0 +1,5 @@
+.settings
+*.properties
+target
+output.csv
+tmp

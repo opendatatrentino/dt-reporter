@@ -15,7 +15,7 @@
  * 
  ******************************************************************************* 
  */
-package eu.trentorise.opendata.dtreporter;
+package eu.trentorise.opendata.dtreporter.main;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.ckan.resource.impl.Resource;
 
 import au.com.bytecode.opencsv.CSVWriter;
 
-public class MainClass {
+public class MkResourcesGroupsCountReportMain {
 
 	public static void main(String args[]) {
 		Client ccl = new Client(new Connection("http://dati.trentino.it"), null);
