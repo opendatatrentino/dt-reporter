@@ -15,7 +15,7 @@
 *
 *******************************************************************************
 */
-package eu.trentorise.opendata.dtreporter.downloader;
+package eu.trentorise.opendata.downloader;
 
 import java.io.BufferedInputStream;
 import java.io.File;

@@ -1,6 +1,6 @@
 /**
  * *****************************************************************************
- * Copyright 2012-2013 Trento Rise (www.trentorise.eu/)
+0 * Copyright 2012-2013 Trento Rise (www.trentorise.eu/)
  * 
  * All rights reserved. This program and the accompanying materials are made
  * available under the terms of the GNU Lesser General Public License (LGPL)

@@ -30,7 +30,7 @@ import org.ckan.Connection;
 import org.ckan.resource.impl.Dataset;
 import org.ckan.resource.impl.Resource;
 
-import eu.trentorise.opendata.dtreporter.downloader.Downloader;
+import eu.trentorise.opendata.downloader.Downloader;
 
 
 
