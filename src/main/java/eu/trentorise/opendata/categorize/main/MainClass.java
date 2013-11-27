@@ -31,7 +31,11 @@ import org.ckan.resource.impl.Dataset;
 import eu.trentorise.opendata.categorize.statistica.StatisticaProcessor;
 
 /**
- * 
+ * This is the main class for the categorization part of the project.
+ * It cycle over all datasets and process ones that have an associated processor.
+ * At the moment it process statistica ones.
+ * Each processor export its results. At the moment the StatisticaProcessor export
+ * analysis in CSV format.
  * @author Alberto Zanella <a.zanella@trentorise.eu>
  * @since Last modified by azanella On 26/nov/2013
  */

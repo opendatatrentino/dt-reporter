@@ -21,7 +21,8 @@ package eu.trentorise.opendata.categorize.models;
 import java.util.ArrayList;
 
 /**
- * 
+ * This is a generic model to output results in CSV. It is used as standard export for the statistical
+ * processor  
  * @author Alberto Zanella <a.zanella@trentorise.eu>
  *@since Last modified by azanella On 26/nov/2013
  */
@@ -77,6 +78,7 @@ public class OutputCSVModel {
 		this.sha = sha;
 	}
 	public ArrayList<String> getDates() {
+		if(dates == null) return new ArrayList<String>();
 		return dates;
 	}
 	public void setDates(ArrayList<String> dates) {

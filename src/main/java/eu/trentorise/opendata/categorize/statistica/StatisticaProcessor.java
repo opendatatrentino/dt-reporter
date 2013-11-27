@@ -45,7 +45,7 @@ import eu.trentorise.opendata.categorize.utility.ResourceUtility;
 import eu.trentorise.opendata.downloader.Downloader;
 
 /**
- * 
+ * This is a processor for statistical dataset. 
  * @author Alberto Zanella <a.zanella@trentorise.eu>
  * @since Last modified by azanella On 26/nov/2013
  */
@@ -54,6 +54,7 @@ public class StatisticaProcessor {
 	private static Organization oz = null;
 	private static Group gp = null;
 
+	private boolean toUpdate;
 	private Resource currentResource;
 	private Dataset currentDataset;
 	private String downloadDirPath;
@@ -61,15 +62,35 @@ public class StatisticaProcessor {
 	private ArrayList<String> headers;
 	private Map<String, OutputCSVModel> output;
 
+	/**
+	 * 
+	 * @param downloadDirPath - Directory where temporary file can be downloaded
+	 * @param outputFileName - Complete path and filename for the output CSV file
+	 */
 	public StatisticaProcessor(String downloadDirPath, String outputFileName) {
+		toUpdate = false;
 		this.downloadDirPath = downloadDirPath;
 		this.outputFileName = outputFileName;
+		reset();
+	}
+	
+	/**
+	 * Reset after exporting
+	 */
+	private void reset()
+	{
+		toUpdate = false;
 		headers = new ArrayList<String>();
 		output = new HashMap<String, OutputCSVModel>();
 		importPreviousOutput();
 	}
 
+	/**
+	 * This method process a dataset identified as a dataset from "statistica"
+	 * @param ds - Dataset CKAN object
+	 */
 	public void processDataset(Dataset ds) {
+		if(toUpdate) reset();
 		for (Resource r : ds.getResources()) {
 			if (r.getFormat().toLowerCase().contains("csv")) {
 				currentDataset = ds;
@@ -99,6 +120,18 @@ public class StatisticaProcessor {
 
 	}
 
+	private void addEmpty(OutputCSVModel om)
+	{
+		if(om.getDates().isEmpty() && (headers.size() - 5) > 0)
+		{
+			ArrayList<String> emptydates = new ArrayList<String>();
+			for (int i = 0; i < headers.size() - 5; i++) {
+				emptydates.add("");
+			}
+			om.setDates(emptydates);
+		}
+	}
+	
 	private ArrayList<String> createHeaders() {
 		ArrayList<String> retval = new ArrayList<String>();
 		retval.add("Resource ID");
@@ -109,6 +142,9 @@ public class StatisticaProcessor {
 		return retval;
 	}
 
+	/**
+	 * Export CSV file in outputFileName specified in the constructor method.
+	 */
 	public void exportCSVFile() {
 		CSVWriter cw = writerInizializer();
 		if (headers.isEmpty()) {
@@ -137,6 +173,7 @@ public class StatisticaProcessor {
 		}
 		new File(outputFileName).delete();
 		new File(outputFileName+".new").renameTo(new File(outputFileName));
+		toUpdate = true;
 	}
 
 	private CSVWriter writerInizializer() {
@@ -166,6 +203,7 @@ public class StatisticaProcessor {
 			OutputCSVModel retval = new OutputCSVModel();
 			retval.setResourceId(resourceId);
 			retval.setLastDate("A");
+			addEmpty(retval);
 			retval.setDatasetName(currentDataset.getName());
 			retval.setResourceName(currentResource.getName());
 			return retval;
@@ -214,6 +252,13 @@ public class StatisticaProcessor {
 		
 	}
 
+	/**
+	 * This method is used to identify if a dataset can be processed with this processor.
+	 * If so, this class can be instantiated and the method processDataset can be used to analyze the dataset.
+	 * @param cl -- instance of CKAN client connected to the dati.trentino.it catalog
+	 * @param ds -- Dataset CKAN object
+	 * @return true if the dataset is coming from "statistica", false otherwise.
+	 */
 	public static boolean isDatasetOfStatistica(Client cl, Dataset ds) {
 		try {
 			if (oz == null) {

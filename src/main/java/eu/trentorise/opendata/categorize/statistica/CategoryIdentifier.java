@@ -26,7 +26,21 @@ import java.util.List;
 import au.com.bytecode.opencsv.CSVReader;
 
 /**
+ * This class identifies the catetgory of a dataset resource coming from the Statistica organization.
+ * It identifies following types:
  * 
+ * 1-	Anno,cod.ente (0-229, 1001 – 1029, 9999),valore
+ * 11-	Anno,cod.ente (0-229, 1001 – 1029),valore
+ * 12-	Anno,cod.ente (0-229, [9999]),valore
+ * 13-	Anno,cod.ente (1001 – 1029, [9999]),valore
+ * 
+ * 2-	Anno,Trentino
+ * 
+ * Other columns are listed as 2# (with # the columns count).
+ * 
+ * 4-	UNDEFINED
+
+ *   
  * @author Alberto Zanella <a.zanella@trentorise.eu>
  * @since Last modified by azanella On 26/nov/2013
  */
